@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.test;
+package com.project.bank.objects;
 
 
 
@@ -11,13 +11,23 @@ package com.test;
  *
  * @author conor
  */
-public class testModel {
+public class customer {
     
      private int id;
      private String name;
      private String address;
      private String email;
      private String password;
+     private String accType;
+
+    public String getAccType() {
+        return accType;
+    }
+
+    public void setAccType(String accType) {
+        this.accType = accType;
+    }
+   
 
     public int getId() {
         return id;
