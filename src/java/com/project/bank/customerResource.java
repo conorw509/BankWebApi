@@ -49,21 +49,24 @@ String pWord = "Lola.1.2.3";
         Class.forName("org.apache.derby.jdbc.ClientDriver");
         conn = DriverManager.getConnection(url, userN, pWord);
         Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery("SELECT * FROM customer");
+        ResultSet rs = st.executeQuery("SELECT * FROM customers");
         while(rs.next()){
             customer ts = new customer();
-           //ts.setId(rs.getInt("id"));
+          // ts.setId(rs.getInt("customer_id "));
             ts.setName(rs.getString("name"));
                    ts.setAddress(rs.getString("address"));
                           ts.setEmail(rs.getString("email"));
                              ts.setPassword(rs.getString("password"));
-                             ts.setAccType(rs.getString("AccountType"));
+                           
                              arr.add(ts);    
             
         }
         
         return arr;     
     }
+    
+    
+    
   
     @POST
    @Path("/addCustomer")
@@ -71,25 +74,27 @@ String pWord = "Lola.1.2.3";
        public customer addCustomer(customer cust) throws SQLException, ClassNotFoundException{
                 
           customer ts = new customer();
-           String sql="insert into customers (name,address,email,password,AccountType) values(?,?,?,?,?)";
+           
+          String query = "INSERT INTO customer(name , address, email,password,accountType)\n" +
+"   VALUES(?,?,?,?,?)";
           
      
         Class.forName("org.apache.derby.jdbc.ClientDriver");
             
                   conn = DriverManager.getConnection(url, userN, pWord);
-        Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery(sql);
-        while(rs.next()){
+                  
+                  PreparedStatement stm = conn.prepareStatement(query);
+                       stm.setString(1,ts.getName());
+                         stm.setString(2,ts.getAddress());
+                           stm.setString(3,ts.getEmail());
+                             stm.setString(4,ts.getPassword());
       
-           // ts.setId(rs.getInt("id"));
-            ts.setName(rs.getString("name"));
-                   ts.setAddress(rs.getString("address"));
-                          ts.setEmail(rs.getString("email"));
-                             ts.setPassword(rs.getString("password"));
-                             ts.setAccType(rs.getString("AccountType"));
-                           
-                           
-       }
+// Statement st = conn.createStatement();
+       // st.executeUpdate(query);
+        
+       
+// ResultSet rs = st.executeQuery(query);
+     
             return ts;
        
 }
